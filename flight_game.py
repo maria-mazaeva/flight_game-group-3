@@ -81,7 +81,7 @@ def rounds(amount_of_choises):
         print(f"{key[0]} : {key[1]} (airport code {key[2]})")
 
 
-    next_location = input("\nPleace provide the airport code of the airport you want to travel to next: ").upper()
+    next_location = input("\nPlease provide the airport code of the airport you want to travel to next: ").upper()
 
 
     #Tests the user input of the ICAO code
@@ -99,9 +99,33 @@ def rounds(amount_of_choises):
 
                 counter += 1
         else:
-            next_location = input("\nPleace provide the airport code again (be sure to write it correctly): ").upper()
+            next_location = input("\nPlease provide the airport code again (be sure to write it correctly): ").upper()
             counter = 0
 
+    # new code from nika
+    # Calculating the distance between airports to choose the nearest one
+    from geopy.distance import geodesic
+
+    def run_airport_distance():
+        # Get current location
+        curr_lat, curr_lon = get_current_location(next_location)
+        city_current = (curr_lat, curr_lon)
+
+        nearest_city = None
+        min_distance = float("inf")
+
+        for key in locations_to_choose.keys():
+            city_candidate = (key[3], key[4])
+            distance_calculated = geodesic(city_current, city_candidate).km
+
+            if distance_calculated < min_distance:
+                min_distance = distance_calculated
+                nearest_city = city_candidate
+
+        return nearest_city
+
+    police_location = run_airport_distance()
+    return police_location
 
 
 
