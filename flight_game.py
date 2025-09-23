@@ -94,7 +94,8 @@ def rounds(amount_of_choises):
         if counter < len(locations_to_choose):
             for key, value in locations_to_choose.items():
                 if next_location in key:
-
+                    
+                    route_records_player.append(next_location)
                     isTrue = False
 
                 counter += 1
@@ -126,6 +127,7 @@ def rounds(amount_of_choises):
 
     police_location = run_airport_distance()
     return police_location
+
 
 
 
