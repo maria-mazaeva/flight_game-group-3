@@ -61,30 +61,24 @@ def get_current_location(icao_code):
 
 
 #Gets the new random selection of airports the user can choose from, every round
-def rounds():
+#The added parameter to the function makes the code reusable instead of hardcoding all the airport choises the user is given
+#The parameter can be set to 5, 4, and lastly 3 so that the choises will get limited after an amount of rounds
+def rounds(amount_of_choises):
+
     data = get_airport_data()
 
-    airport1 = random.randint(0, len(data))
-    airport2 = random.randint(0, len(data))
-    airport3 = random.randint(0, len(data))
-    airport4 = random.randint(0, len(data))
-    airport5 = random.randint(0, len(data))
+    locations_to_choose = {}   #Empty dictionary
 
-    #Stores all the random airports in a dictionary
-    locations_to_choose = {data[airport1]: None,
-                           data[airport2]: None,
-                           data[airport3]: None,
-                           data[airport4]: None,
-                           data[airport5]: None}
+    #Uses the parameter to randomly fetch airports, and add them to the empty dictionary
+    for i in range(0, amount_of_choises):
+        locations_to_choose[data[random.randint(0, len(data))]] = None
 
 
-    #Prints the airports the player can choose from
+
+
     print("For your next trip you have these airports to choose from:\n ")
     for key in locations_to_choose.keys():
         print(f"{key[0]} : {key[1]} (airport code {key[2]})")
-
-
-
 
 
     next_location = input("\nPleace provide the airport code of the airport you want to travel to next: ").upper()
@@ -93,19 +87,21 @@ def rounds():
     #Tests the user input of the ICAO code
     #Ensures no typo errors
     isTrue = True
+    counter = 0
+
     while isTrue:
-        if next_location == data[airport1][2] or next_location == data[airport2][2] or next_location == data[airport3][2] or next_location == data[airport4][2] or next_location == data[airport5][2]:
-            route_records_player.append(next_location)
-            isTrue = False
+
+        if counter < len(locations_to_choose):
+            for key, value in locations_to_choose.items():
+                if next_location in key:
+
+                    isTrue = False
+
+                counter += 1
         else:
             next_location = input("\nPleace provide the airport code again (be sure to write it correctly): ").upper()
-
-
-    current_location = get_current_location(next_location)
-
-    return current_location
+            counter = 0
 
 
 
 
-print(route_records_player)
