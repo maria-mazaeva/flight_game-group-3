@@ -34,16 +34,7 @@ def start_game():
 
 #Returns a list of tuples, of all the airports in Europe, the country they are in, and there ICAO-code
 #Also the coordinates of the airport
-#def get_airport_data():
-#    sql = """select airport.name, country.name, airport.ident, airport.latitude_deg, airport.longitude_deg 
-#             from airport, country
-#             where airport.iso_country = country.iso_country
-#             and country.continent = "EU"
-#          """
-#    cursor = connection.cursor()
-#    cursor.execute(sql)
-#    data = cursor.fetchall()
-#    return data
+
 def get_airport_data():                  
     sql = """select airport.name, country.name, airport.ident, airport.latitude_deg, airport.longitude_deg
             from airport, country
@@ -114,6 +105,7 @@ def rounds(amount_of_choises):
         else:
             next_location = input("\nPleace provide the airport code again (be sure to write it correctly): ").upper()
             counter = 0
+
 
 
 
