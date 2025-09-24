@@ -22,8 +22,7 @@ rounds_counter = 0
 # Gives the player information about how the game works
 def start_game():
     print("You just robbed the Bank of Finland, and the police are after you!!!")
-    print("Your aim is to outrun the police by visiting 10 different airports in Europe.")
-    print("Luckily for you, the police are not very honest, so you can bribe them ones.")
+    print("Your aim is to outrun the police by visiting 7 different airports in Europe.")
     print("Avoid the police that is trying to get you, do not get caught!")
     print("Remember to choose the most distant airport from your current location to not get caught!")
     print("The police will always be in the closest airport.")
@@ -54,6 +53,8 @@ def get_current_location(icao_code):
     data = cursor.fetchall()
     return data
 
+
+#Calculating the distance between airports to choose the nearest one for the police
 def run_airport_distance(locations_to_choose, route_records):
     # Get current location
     curr_lat, curr_lon = get_current_location(route_records[-1])[0]
@@ -107,11 +108,6 @@ def rounds(amount_of_choises):
         else:
             next_location = input("\nPlease provide the airport code again (be sure to write it correctly): ").upper()
             counter = 0
-
-    # new code from nika
-    # Calculating the distance between airports to choose the nearest one
-
-
 
 
     police_location = run_airport_distance(locations_to_choose, route_records_player)
