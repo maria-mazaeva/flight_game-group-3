@@ -88,7 +88,7 @@ def rounds(amount_of_choises):
 
     # Uses the parameter to randomly fetch airports, and add them to the empty dictionary
     for i in range(0, amount_of_choises):
-        locations_to_choose[data[random.randint(0, len(data))]] = None
+        locations_to_choose[data[random.randint(0, len(data) - 1)]] = None
 
     print("For your next trip you have these airports to choose from:\n ")
     for key in locations_to_choose.keys():
@@ -118,6 +118,7 @@ def rounds(amount_of_choises):
     police_location = run_airport_distance(locations_to_choose, route_records_player)
     print(police_location)
     return police_location
+
 
 
 
