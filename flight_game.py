@@ -143,14 +143,15 @@ while rounds_counter <= 7:
     for i in getairportdata:
         if i[2] == route_records_player[-1]:            # prints and tracks current lication  
             current = i
-    print(f"Your current location is {current[1]}")
-    #---------------------------
-    run = rounds(amount_of_choises)
-    if run == "winning":
-        rounds_counter += 1
-    if run == "losing":
-        print (f"You lost.")# \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
+    print(f"Your current location is {current[1]}")            # MARIA -------------- TO DISCUSS::::::::
+    #---------------------------                        #STILL WRITE (OR SHOULD WE?) WHERE POLICE WAS IN PREVIOUS ROUND
+    run = rounds(amount_of_choises)                        # TO MAKE WIN THING - LIKE TO DECORATE IT WITH COOL MAN 
+    if run == "winning":                                    # I THINK WHAT IF THE AMOUNT OF ROUNDS COUND BE LESS? LIKE 5? AND CHOISES
+        rounds_counter += 1                                        # ARE DECREASING EACH ROUND.
+    if run == "losing":                                            #  COZ WHEN I WAS TESTING THINGS I FELT LIKE 5 IS ENOUGH
+        print (f"You lost.\n- | | (x_x) | |\n- | |  /█\  | |\n- | |  / \  | |")
         break
 if rounds_counter == 8:
     print("winn!!!!!")
+
 
