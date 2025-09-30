@@ -6,7 +6,7 @@ connection = mysql.connector.connect(
     host="127.0.0.1",
     port=3306,
     database="flight_game",
-    user="root",
+    user="mariamaz",
     password="password",
     autocommit=True
 )
@@ -126,16 +126,20 @@ def rounds(amount_of_choises):
     return answer
 
 
+# round counter = 1
 #MAIN ACTION
-start_game()
-while rounds_counter <= 4:
-    rounds(5)
-    if rounds(5) == "winning":
+#start_game()
+amount_of_choises = 5    #it decreases from round 4 
+
+while rounds_counter <= 7:
+    if rounds_counter >=5:
+        amount_of_choises -=1
+    print(f"--------------------- ROUND {rounds_counter} --------------------")
+    run = rounds(amount_of_choises)
+    if run == "winning":
         rounds_counter += 1
     else:
-        print (f"You lost. \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
-
-
-
-
-
+        print (f"You lost.")# \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
+        break
+if rounds_counter == 7:
+    print("winn!!!!!")
