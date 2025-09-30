@@ -135,11 +135,13 @@ while rounds_counter <= 7:
     if rounds_counter >=5:
         amount_of_choises -=1
     print(f"--------------------- ROUND {rounds_counter} --------------------")
+    print("Your current location is .....")
     run = rounds(amount_of_choises)
     if run == "winning":
         rounds_counter += 1
-    else:
+    if run == "losing":
         print (f"You lost.")# \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
         break
-if rounds_counter == 7:
+
+if rounds_counter == 8:
     print("winn!!!!!")
