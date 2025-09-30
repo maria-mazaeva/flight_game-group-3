@@ -32,13 +32,13 @@ def start_game():
 #Returns a list of tuples, of all the airports in Europe, the country they are in, and there ICAO-code
 #Also the coordinates of the airport
 
-def get_airport_data():                  
+def get_airport_data():
     sql = """select airport.name, country.name, airport.ident, airport.latitude_deg, airport.longitude_deg
             from airport, country
             where airport.iso_country = country.iso_country
             and country.continent = 'EU'
             group by country.name;
-            """ 
+            """
 
     cursor = connection.cursor()
     cursor.execute(sql)
@@ -89,6 +89,10 @@ def rounds(amount_of_choises):
     # Uses the parameter to randomly fetch airports, and add them to the empty dictionary
     for i in range(0, amount_of_choises):
         locations_to_choose[data[random.randint(0, len(data) - 1)]] = None
+        
+
+    police_location = run_airport_distance(locations_to_choose, route_records_player)
+
 
     print("For your next trip you have these airports to choose from:\n ")
     for key in locations_to_choose.keys():
@@ -115,10 +119,9 @@ def rounds(amount_of_choises):
             counter = 0
 
 
-    police_location = run_airport_distance(locations_to_choose, route_records_player)
 
     #checking if player's current location same with police and returning this result in function result
-    if police_location == get_current_location(route_records_player[-1]):
+    if police_location == get_current_location(next_location)[0]:
         answer = "losing"
     else:
         answer = "winning"
@@ -129,20 +132,25 @@ def rounds(amount_of_choises):
 # round counter = 1
 #MAIN ACTION
 #start_game()
-amount_of_choises = 5    #it decreases from round 4 
+amount_of_choises = 5    #it decreases from round 4
 
 while rounds_counter <= 7:
-    if rounds_counter >=5:
-        amount_of_choises -=1
+
+    if rounds_counter >= 5:
+        amount_of_choises -= 1
+        print(rounds_counter)
+
     print(f"--------------------- ROUND {rounds_counter} --------------------")
     print("Your current location is .....")
+    print(amount_of_choises)
     run = rounds(amount_of_choises)
+
     if run == "winning":
         rounds_counter += 1
+
     if run == "losing":
         print (f"You lost.")# \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
         break
 
 if rounds_counter == 8:
     print("winn!!!!!")
-
