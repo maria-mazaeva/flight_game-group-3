@@ -149,9 +149,10 @@ while rounds_counter <= 7:
     if run == "winning":                                    # I THINK WHAT IF THE AMOUNT OF ROUNDS COUND BE LESS? LIKE 5? AND CHOISES
         rounds_counter += 1                                        # ARE DECREASING EACH ROUND.
     if run == "losing":                                            #  COZ WHEN I WAS TESTING THINGS I FELT LIKE 5 IS ENOUGH
-        print (f"You lost.\n- | | (x_x) | |\n- | |  /█\  | |\n- | |  / \  | |")
+        print (f"You lost.\n- | | (x_x) | |\n- | |  /█\  | |\n- | |  / \  | |")   # ALSO - "YOU LOST" IS PRINTED AS FIRST THING - FIX NEEDED
         break
 if rounds_counter == 8:
     print("winn!!!!!")
+
 
 
