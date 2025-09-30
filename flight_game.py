@@ -133,24 +133,24 @@ def rounds(amount_of_choises):
 #MAIN ACTION
 #start_game()
 amount_of_choises = 5    #it decreases from round 4
-
+getairportdata = get_airport_data()
 while rounds_counter <= 7:
-
     if rounds_counter >= 5:
         amount_of_choises -= 1
-        print(rounds_counter)
-
-    print(f"--------------------- ROUND {rounds_counter} --------------------")
-    print("Your current location is .....")
-    print(amount_of_choises)
+    print(f"--------------------- ROUND {rounds_counter} ---------------------")
+    #--------------------------
+    current = ("f","Finland")
+    for i in getairportdata:
+        if i[2] == route_records_player[-1]:            # prints and tracks current lication  
+            current = i
+    print(f"Your current location is {current[1]}")
+    #---------------------------
     run = rounds(amount_of_choises)
-
     if run == "winning":
         rounds_counter += 1
-
     if run == "losing":
         print (f"You lost.")# \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
         break
-
 if rounds_counter == 8:
     print("winn!!!!!")
+
