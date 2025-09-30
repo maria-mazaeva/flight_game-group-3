@@ -6,7 +6,7 @@ connection = mysql.connector.connect(
     host="127.0.0.1",
     port=3306,
     database="flight_game",
-    user="mariamaz",
+    user="root",
     password="password",
     autocommit=True
 )
@@ -145,3 +145,4 @@ while rounds_counter <= 7:
 
 if rounds_counter == 8:
     print("winn!!!!!")
+
