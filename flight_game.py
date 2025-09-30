@@ -15,7 +15,7 @@ connection = mysql.connector.connect(
 # Could be printed as a part of the summary at the end (wether you win or lose)
 route_records_player = ["EFHK"]  # Player always starts at Helinki Airport, Finland
 route_records_police = []
-rounds_counter = 0
+rounds_counter = 1
 
 
 # Function to start the game
@@ -116,8 +116,24 @@ def rounds(amount_of_choises):
 
 
     police_location = run_airport_distance(locations_to_choose, route_records_player)
-    print(police_location)
-    return police_location
+
+    #checking if player's current location same with police and returning this result in function result
+    if police_location == get_current_location(route_records_player[-1]):
+        answer = "losing"
+    else:
+        answer = "winning"
+
+    return answer
+
+
+#MAIN ACTION
+start_game()
+while rounds_counter <= 4:
+    rounds(5)
+    if rounds(5) == "winning":
+        rounds_counter += 1
+    else:
+        print (f"You lost. \n| | (x_x) | 1 \n 1 /1 1 1 \nll / \ 11 ")
 
 
 
