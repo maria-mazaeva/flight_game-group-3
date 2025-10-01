@@ -28,17 +28,17 @@ def start_game():
     print("The police will always be in the closest airport.")
 
 
-
-#Returns a list of tuples, of all the airports in Europe, the country they are in, and there ICAO-code
-#Also the coordinates of the airport
+# Returns a list of tuples, of all the airports in Europe, the country they are in, and there ICAO-code
+# Also the coordinates of the airport
 
 def get_airport_data():
     sql = """select airport.name, country.name, airport.ident, airport.latitude_deg, airport.longitude_deg
-            from airport, country
-            where airport.iso_country = country.iso_country
-            and country.continent = 'EU'
-            group by country.name;
-            """
+             from airport, \
+                  country
+             where airport.iso_country = country.iso_country
+               and country.continent = 'EU'
+             group by country.name; \
+          """
 
     cursor = connection.cursor()
     cursor.execute(sql)
@@ -59,7 +59,7 @@ def get_current_location(icao_code):
     return data
 
 
-#Calculating the distance between airports to choose the nearest one for the police
+# Calculating the distance between airports to choose the nearest one for the police
 def run_airport_distance(locations_to_choose, route_records):
     # Get current location
     curr_lat, curr_lon = get_current_location(route_records[-1])[0]
@@ -78,6 +78,7 @@ def run_airport_distance(locations_to_choose, route_records):
 
     return nearest_city
 
+
 # Gets the new random selection of airports the user can choose from, every round
 # The added parameter to the function makes the code reusable instead of hardcoding all the airport choises the user is given
 # The parameter can be set to 5, 4, and lastly 3 so that the choises will get limited after an amount of rounds
@@ -89,10 +90,8 @@ def rounds(amount_of_choises):
     # Uses the parameter to randomly fetch airports, and add them to the empty dictionary
     for i in range(0, amount_of_choises):
         locations_to_choose[data[random.randint(0, len(data) - 1)]] = None
-        
 
     police_location = run_airport_distance(locations_to_choose, route_records_player)
-
 
     print("For your next trip you have these airports to choose from:\n ")
     for key in locations_to_choose.keys():
@@ -118,9 +117,7 @@ def rounds(amount_of_choises):
             next_location = input("\nPlease provide the airport code again (be sure to write it correctly): ").upper()
             counter = 0
 
-
-
-    #checking if player's current location same with police and returning this result in function result
+    # checking if player's current location same with police and returning this result in function result
     if police_location == get_current_location(next_location)[0]:
         answer = "losing"
     else:
@@ -130,29 +127,26 @@ def rounds(amount_of_choises):
 
 
 # round counter = 1
-#MAIN ACTION
-#start_game()
-amount_of_choises = 5    #it decreases from round 4
+# MAIN ACTION
+# start_game()
+amount_of_choises = 5  # it decreases from round 4
 getairportdata = get_airport_data()
 while rounds_counter <= 7:
     if rounds_counter >= 5:
         amount_of_choises -= 1
     print(f"--------------------- ROUND {rounds_counter} ---------------------")
-    #--------------------------
-    current = ("f","Finland")
+    # --------------------------
+    current = ("f", "Finland")
     for i in getairportdata:
-        if i[2] == route_records_player[-1]:            # prints and tracks current lication  
+        if i[2] == route_records_player[-1]:  # prints and tracks current lication
             current = i
-    print(f"Your current location is {current[1]}")            # MARIA -------------- TO DISCUSS::::::::
-    #---------------------------                        #STILL WRITE (OR SHOULD WE?) WHERE POLICE WAS IN PREVIOUS ROUND
-    run = rounds(amount_of_choises)                        # TO MAKE WIN THING - LIKE TO DECORATE IT WITH COOL MAN 
-    if run == "winning":                                    # I THINK WHAT IF THE AMOUNT OF ROUNDS COUND BE LESS? LIKE 5? AND CHOISES
-        rounds_counter += 1                                        # ARE DECREASING EACH ROUND.
-    if run == "losing":                                            #  COZ WHEN I WAS TESTING THINGS I FELT LIKE 5 IS ENOUGH
-        print (f"You lost.\n- | | (x_x) | |\n- | |  /█\  | |\n- | |  / \  | |")   # ALSO - "YOU LOST" IS PRINTED AS FIRST THING - FIX NEEDED
+    print(f"Your current location is {current[1]}")  # MARIA -------------- TO DISCUSS::::::::
+    # ---------------------------                        #STILL WRITE (OR SHOULD WE?) WHERE POLICE WAS IN PREVIOUS ROUND
+    run = rounds(amount_of_choises)  # TO MAKE WIN THING - LIKE TO DECORATE IT WITH COOL MAN
+    if run == "winning":  # I THINK WHAT IF THE AMOUNT OF ROUNDS COUND BE LESS? LIKE 5? AND CHOISES
+        rounds_counter += 1  # ARE DECREASING EACH ROUND.
+    if run == "losing":  # COZ WHEN I WAS TESTING THINGS I FELT LIKE 5 IS ENOUGH
+        print(f"You lost.\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")  # ALSO - "YOU LOST" IS PRINTED AS FIRST THING - FIX NEEDED
         break
 if rounds_counter == 8:
     print("winn!!!!!")
-
-
-
