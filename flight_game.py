@@ -6,7 +6,7 @@ connection = mysql.connector.connect(
     host="127.0.0.1",
     port=3306,
     database="flight_game",
-    user="root",
+    user="nika",
     password="password",
     autocommit=True
 )
@@ -131,8 +131,8 @@ def rounds(amount_of_choises):
 # start_game()
 amount_of_choises = 5  # it decreases from round 4
 getairportdata = get_airport_data()
-while rounds_counter <= 7:
-    if rounds_counter >= 5:
+while rounds_counter <= 5:
+    if rounds_counter >= 3:
         amount_of_choises -= 1
     print(f"--------------------- ROUND {rounds_counter} ---------------------")
     # --------------------------
@@ -148,5 +148,5 @@ while rounds_counter <= 7:
     if run == "losing":  # COZ WHEN I WAS TESTING THINGS I FELT LIKE 5 IS ENOUGH
         print(f"You lost.\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")  # ALSO - "YOU LOST" IS PRINTED AS FIRST THING - FIX NEEDED
         break
-if rounds_counter == 8:
-    print("winn!!!!!")
+if rounds_counter == 6:
+    print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
