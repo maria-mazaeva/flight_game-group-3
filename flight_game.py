@@ -6,7 +6,7 @@ connection = mysql.connector.connect(
     host="127.0.0.1",
     port=3306,
     database="flight_game",
-    user="root",
+    user="nika",
     password="password",
     autocommit=True
 )
@@ -21,11 +21,9 @@ rounds_counter = 1
 # Function to start the game
 # Gives the player information about how the game works
 def start_game():
+    print('WELCOME to the "Police escape" game!')
     print("You just robbed the Bank of Finland, and the police are after you!!!")
-    print("Your aim is to outrun the police by visiting 7 different airports in Europe.")
-    print("Avoid the police that is trying to get you, do not get caught!")
-    print("Remember to choose the most distant airport from your current location to not get caught!")
-    print("The police will always be in the closest airport.")
+    print("There are 5 rounds in the game.\nTo win: visit 5 airports, each turn pick the FARTHEST airport.\nPolice always move to the CLOSEST.\nIf they reach you, you lose.")
 
 
 # Returns a list of tuples, of all the airports in Europe, the country they are in, and there ICAO-code
@@ -126,9 +124,8 @@ def rounds(amount_of_choises):
     return answer
 
 
-# round counter = 1
 # MAIN ACTION
-# start_game()
+start_game()
 amount_of_choises = 5  # it decreases from round 4
 getairportdata = get_airport_data()
 while rounds_counter <= 5:
