@@ -143,7 +143,7 @@ while rounds_counter <= 5:
     if run == "winning":
         rounds_counter += 1  # ARE DECREASING EACH ROUND.
     if run == "losing":
-        print(f"You lost.\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
+        print(f"You lost. Police just got you!\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
         break
 if rounds_counter == 6:
     print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
