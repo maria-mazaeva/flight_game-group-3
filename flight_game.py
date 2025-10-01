@@ -130,11 +130,9 @@ def rounds(amount_of_choises):
 
 # MAIN ACTION
 start_game()
-amount_of_choises = 5  # it decreases from round 4
+amount_of_choises = 6  # it decreases from round 4
 getairportdata = get_airport_data()
 while rounds_counter <= 5:
-    if rounds_counter >= 3:
-        amount_of_choises -= 1
     print(f"--------------------- ROUND {rounds_counter} ---------------------")
     # --------------------------
     current = ("f", "Finland")
@@ -149,6 +147,7 @@ while rounds_counter <= 5:
     if run == "losing":
         print(f"You lost. Police just got you!\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
         break
+    amount_of_choises -= 1
 if rounds_counter == 6:
     print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
 
