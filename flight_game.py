@@ -85,7 +85,7 @@ def rounds(amount_of_choises):
     locations_to_choose = {}  # Empty dictionary
     # List to track used indexes
     used_indexes = []
-    while len(used_indexes) <= amount_of_choises:
+    while len(used_indexes) < amount_of_choises:
         idx = random.randint(0, len(data) - 1)
         if idx not in used_indexes:
             locations_to_choose[data[idx]] = None
@@ -151,4 +151,5 @@ while rounds_counter <= 5:
         break
 if rounds_counter == 6:
     print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
+
 
