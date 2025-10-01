@@ -141,7 +141,7 @@ while rounds_counter <= 5:
         if i[2] == route_records_player[-1]:  # prints and tracks current lication
             current = i
     print(f"Your current location is {current[1]}")
-    # ---------------------------                        #STILL WRITE (OR SHOULD WE?) WHERE POLICE WAS IN PREVIOUS ROUND
+    # ---------------------------   #STILL WRITE (OR SHOULD WE?) WHERE POLICE WAS IN PREVIOUS ROUND
     run = rounds(amount_of_choises)
     if run == "winning":
         rounds_counter += 1  # ARE DECREASING EACH ROUND.
