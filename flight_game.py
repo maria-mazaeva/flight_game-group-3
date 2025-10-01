@@ -82,12 +82,16 @@ def run_airport_distance(locations_to_choose, route_records):
 # The parameter can be set to 5, 4, and lastly 3 so that the choises will get limited after an amount of rounds
 def rounds(amount_of_choises):
     data = get_airport_data()
-
     locations_to_choose = {}  # Empty dictionary
+    # List to track used indexes
+    used_indexes = []
+    while len(used_indexes) <= amount_of_choises:
+        idx = random.randint(0, len(data) - 1)
+        if idx not in used_indexes:
+            locations_to_choose[data[idx]] = None
+            used_indexes.append(idx)
 
-    # Uses the parameter to randomly fetch airports, and add them to the empty dictionary
-    for i in range(0, amount_of_choises):
-        locations_to_choose[data[random.randint(0, len(data) - 1)]] = None
+
 
     police_location = run_airport_distance(locations_to_choose, route_records_player)
 
@@ -147,3 +151,4 @@ while rounds_counter <= 5:
         break
 if rounds_counter == 6:
     print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
+
