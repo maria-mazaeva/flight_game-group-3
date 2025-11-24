@@ -26,7 +26,7 @@ def start_game():
     print("There are 5 rounds in the game.\nTo win: visit 5 airports, each turn pick the FARTHEST airport.\nPolice always move to the CLOSEST.\nIf they reach you, you lose.")
 
 
-# Returns a list of tuples, of all the airports in Europe, the country they are in, and there ICAO-code
+# Returns a list of 50 airports, one airport per European country, the country they are in, and there ICAO-code
 # Also the coordinates of the airport
 
 def get_airport_data():
@@ -130,25 +130,26 @@ def rounds(amount_of_choises):
 
 # MAIN ACTION
 start_game()
-amount_of_choises = 6  # it decreases from round 4
+amount_of_choises = 6 
 getairportdata = get_airport_data()
 while rounds_counter <= 5:
     print(f"--------------------- ROUND {rounds_counter} ---------------------")
-    # --------------------------
+    
     current = ("f", "Finland")
     for i in getairportdata:
         if i[2] == route_records_player[-1]:  # prints and tracks current lication
             current = i
     print(f"Your current location is {current[1]}")
-    # ---------------------------   #STILL WRITE (OR SHOULD WE?) WHERE POLICE WAS IN PREVIOUS ROUND
+    
     run = rounds(amount_of_choises)
     if run == "winning":
-        rounds_counter += 1  # ARE DECREASING EACH ROUND.
+        rounds_counter += 1  
     if run == "losing":
         print(f"You lost. Police just got you!\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
         break
     amount_of_choises -= 1
 if rounds_counter == 6:
     print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
+
 
 
