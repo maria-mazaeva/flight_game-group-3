@@ -1,1 +1,123 @@
 "use strict";
+
+
+let route_records_player = ["EFHK"];
+let round_counter = 1;
+
+
+
+async function get_airport_data() {
+    try {
+        let request = await fetch("url");
+
+        if (request.status === 200) {
+            let response = await request.json();
+            return response
+        }
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+
+
+//Calculates the distance between to choose the nearest one for the police
+async function run_airport_distance(locations_to_choose, route_records) {
+    try {
+        let request = await fetch("url");
+
+        if (request.status === 200) {
+            let response = await request.json();
+            return response;
+        }
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+
+
+async function get_current_location(icao_code) {
+    try {
+        let request = await fetch("url");
+
+        if (request.status === 200) {
+            let response = await request.json();
+            return response;
+        }
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+
+async function rounds(amount_of_choises) {
+    //Fetch data from backend
+    let data = get_airport_data();
+    let locations_to_choose =  {};
+
+    //List to track used indexes
+    let used_indexes = [];
+
+    while (used_indexes.length < amount_of_choises) {
+        let index = Math.floor(Math.random() * data.length);
+
+        if (!(index in used_indexes)) {  //Syntax for checking if element is inside a list
+            locations_to_choose[data[index]] = null;
+            used_indexes.push(index);
+        }
+    }
+
+
+
+    let police_location = run_airport_distance(locations_to_choose, route_records_player);
+
+    /*
+    Code block for making the choises
+
+    Have to include the initialization of the next_location - variable
+     */
+
+
+    if (police_location === get_current_location(next_location)[0]) {
+        return "loosing";
+    } else {
+        return "winning";
+    }
+
+
+}
+
+
+
+
+
+function main() {
+    let amount_of_choises = 6;
+    let get_airport_data = get_airport_data();
+
+    while (round_counter <= 5) {
+        /*
+        Codeblock to change the heading
+        Should state which airport we are currently at
+        Use info from variable get_airport_data
+         */
+
+        let run = rounds(amount_of_choises);
+
+        if (run === "winning") {
+            round_counter++;
+        }
+
+        if (run === "losing") {
+            alert("You have lost!");
+            break;
+        }
+
+        amount_of_choises--;
+    }
+
+    if (rounds_counter === 6) {
+        alert("You have won!");
+    }
+}
