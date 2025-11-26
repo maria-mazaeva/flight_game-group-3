@@ -1,15 +1,73 @@
+import json
+from flask import Flask
+from flask_cors import CORS
+import os
 import mysql.connector
-import random
-from geopy.distance import geodesic
 
-connection = mysql.connector.connect(
-    host="127.0.0.1",
-    port=3306,
-    database="flight_game",
-    user="root",
-    password="password",
-    autocommit=True
-)
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+class Database:
+    def __init__(self):
+        self.conn = mysql.connector.connect(
+            host="127.0.0.1",
+            port=3306,
+            database="flight_game",
+            user="root",
+            password="password",
+            autocommit=True
+        )
+    def get_conn(self):
+        return self.conn
+
+db = Database()
+
+# Returns a list of 50 airports, one airport per European country, the country they are in, and there ICAO-code
+# Also the coordinates of the airport
+@app.route('/all_airports')
+def get_airport_data():
+    sql = """select airport.name, country.name, airport.ident, airport.latitude_deg, airport.longitude_deg
+             from airport, \
+                  country
+             where airport.iso_country = country.iso_country
+               and country.continent = 'EU'
+             group by country.name; \
+          """
+
+    cursor = db.get_conn().cursor(dictionary=True)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    airport_data = []
+    for i in result:
+        airport_data.append(i)
+    return json.dumps(airport_data)
+
+
+# Gets the coordinates of the players current location
+@app.route('/get_current_location/<icao_code>')
+def get_current_location(icao_code):
+    sql = "select latitude_deg, longitude_deg from airport where ident =%s"
+    cursor = db.get_conn().cursor(dictionary=True)
+    cursor.execute(sql, (icao_code,))
+    result = cursor.fetchone()
+    return json.dumps(result)
+
+@app.errorhandler(404)
+def page_not_found(error_code):
+    response = {
+        "message": "Invalid endpoint",
+        "status": 404
+    }
+    json_response = json.dumps(response)
+    http_response = Response(response=json_response, status=404, mimetype="application/json")
+    return http_response
+
+if __name__ == '__main__':
+    app.run(use_reloader=True, host='127.0.0.1', port=5000)
+
+
+
 
 # Empty lists to store the routes of the player and the police
 # Could be printed as a part of the summary at the end (wether you win or lose)
@@ -24,37 +82,6 @@ def start_game():
     print('WELCOME to the "Police escape" game!')
     print("You just robbed the Bank of Finland, and the police are after you!!!")
     print("There are 5 rounds in the game.\nTo win: visit 5 airports, each turn pick the FARTHEST airport.\nPolice always move to the CLOSEST.\nIf they reach you, you lose.")
-
-
-# Returns a list of 50 airports, one airport per European country, the country they are in, and there ICAO-code
-# Also the coordinates of the airport
-
-def get_airport_data():
-    sql = """select airport.name, country.name, airport.ident, airport.latitude_deg, airport.longitude_deg
-             from airport, \
-                  country
-             where airport.iso_country = country.iso_country
-               and country.continent = 'EU'
-             group by country.name; \
-          """
-
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    data = cursor.fetchall()
-    airport_data = []
-    for i in data:
-        airport_data.append(i)
-    return airport_data
-
-
-# Gets the coordinates of the players current location
-def get_current_location(icao_code):
-    sql = f"select latitude_deg, longitude_deg from airport where ident = '{icao_code}'"
-    cursor = connection.cursor()
-    cursor.execute(sql)
-
-    data = cursor.fetchall()
-    return data
 
 
 # Calculating the distance between airports to choose the nearest one for the police
