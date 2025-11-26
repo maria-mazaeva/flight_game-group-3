@@ -3,6 +3,8 @@ from flask import Flask
 from flask_cors import CORS
 import os
 import mysql.connector
+import random
+from geopy.distance import geodesic
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -14,7 +16,7 @@ class Database:
             host="127.0.0.1",
             port=3306,
             database="flight_game",
-            user="root",
+            user="nika",
             password="password",
             autocommit=True
         )
