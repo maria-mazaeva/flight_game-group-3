@@ -1,5 +1,5 @@
 import json
-from flask import Flask, Response
+from flask import Flask,Response
 from flask_cors import CORS
 import os
 import mysql.connector
@@ -16,7 +16,7 @@ class Database:
             host="127.0.0.1",
             port=3306,
             database="flight_game",
-            user="mariamaz",
+            user="root",
             password="password",
             autocommit=True
         )
@@ -55,6 +55,26 @@ def get_current_location(icao_code):
     result = cursor.fetchone()
     return json.dumps(result)
 
+# Calculating the distance between airports to choose the nearest one for the police
+@app.route('/run_airport_distance/<locations_to_choose>/<route_records>')
+def run_airport_distance(locations_to_choose, route_records):
+    # Get current location
+    curr_lat, curr_lon = get_current_location(route_records[-1])[0]
+    city_current = (curr_lat, curr_lon)
+
+    nearest_city = None
+    min_distance = float("inf")
+
+    for key in locations_to_choose.keys():
+        city_candidate = (key[3], key[4])
+        distance_calculated = geodesic(city_current, city_candidate).km
+
+        if distance_calculated < min_distance:
+            min_distance = distance_calculated
+            nearest_city = city_candidate
+
+    return json.dumps(nearest_city)
+
 @app.errorhandler(404)
 def page_not_found(error_code):
     response = {
@@ -85,25 +105,6 @@ def start_game():
     print("You just robbed the Bank of Finland, and the police are after you!!!")
     print("There are 5 rounds in the game.\nTo win: visit 5 airports, each turn pick the FARTHEST airport.\nPolice always move to the CLOSEST.\nIf they reach you, you lose.")
 
-
-# Calculating the distance between airports to choose the nearest one for the police
-def run_airport_distance(locations_to_choose, route_records):
-    # Get current location
-    curr_lat, curr_lon = get_current_location(route_records[-1])[0]
-    city_current = (curr_lat, curr_lon)
-
-    nearest_city = None
-    min_distance = float("inf")
-
-    for key in locations_to_choose.keys():
-        city_candidate = (key[3], key[4])
-        distance_calculated = geodesic(city_current, city_candidate).km
-
-        if distance_calculated < min_distance:
-            min_distance = distance_calculated
-            nearest_city = city_candidate
-
-    return nearest_city
 
 
 # Gets the new random selection of airports the user can choose from, every round
@@ -159,20 +160,20 @@ def rounds(amount_of_choises):
 
 # MAIN ACTION
 start_game()
-amount_of_choises = 6 
+amount_of_choises = 6
 getairportdata = get_airport_data()
 while rounds_counter <= 5:
     print(f"--------------------- ROUND {rounds_counter} ---------------------")
-    
+
     current = ("f", "Finland")
     for i in getairportdata:
         if i[2] == route_records_player[-1]:  # prints and tracks current lication
             current = i
     print(f"Your current location is {current[1]}")
-    
+
     run = rounds(amount_of_choises)
     if run == "winning":
-        rounds_counter += 1  
+        rounds_counter += 1
     if run == "losing":
         print(f"You lost. Police just got you!\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
         break
