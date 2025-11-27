@@ -1,5 +1,5 @@
 import json
-from flask import Flask,Response, jsonify
+from flask import Flask,Response, jsonify, request
 from flask_cors import CORS
 import os
 import mysql.connector
@@ -65,7 +65,7 @@ def run_airport_distance():
     route_records = data['route_records']
 
     # Get current location
-    location_dictionary = get_current_location(route_records[-1])
+    location_dictionary = json.loads(get_current_location(route_records[-1]))
     curr_lat = location_dictionary['latitude_deg']
     curr_lon = location_dictionary['longitude_deg']
     city_current = (curr_lat, curr_lon)
@@ -84,7 +84,8 @@ def run_airport_distance():
             min_distance = distance_calculated
             nearest_city = city_candidate
 
-    return json.dumps(nearest_city)
+    result_str = json.dumps(nearest_city)
+    return result_str
 
 @app.errorhandler(404)
 def page_not_found(error_code):
