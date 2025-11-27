@@ -8,7 +8,7 @@ let round_counter = 1;
 
 async function get_airport_data() {
     try {
-        let request = await fetch("url");
+        let request = await fetch("http://127.0.0.1:5000/all_airports");
 
         if (request.status === 200) {
             let response = await request.json();
@@ -39,7 +39,7 @@ async function run_airport_distance(locations_to_choose, route_records) {
 
 async function get_current_location(icao_code) {
     try {
-        let request = await fetch("url");
+        let request = await fetch("http://127.0.0.1:5000/get_current_location/" + icao_code);
 
         if (request.status === 200) {
             let response = await request.json();
@@ -53,7 +53,7 @@ async function get_current_location(icao_code) {
 
 async function rounds(amount_of_choises) {
     //Fetch data from backend
-    let data = get_airport_data();
+    let data = await get_airport_data();
     let locations_to_choose =  {};
 
     //List to track used indexes
@@ -70,13 +70,12 @@ async function rounds(amount_of_choises) {
 
 
 
-    let police_location = run_airport_distance(locations_to_choose, route_records_player);
+    let police_location = await run_airport_distance(locations_to_choose, route_records_player);
 
-    /*
-    Code block for making the choises
-
-    Have to include the initialization of the next_location - variable
-     */
+    
+    createButtons(locations_to_choose);
+    //Have to include the initialization of the next_location - variable
+     
 
 
     if (police_location === get_current_location(next_location)[0]) {
@@ -92,9 +91,9 @@ async function rounds(amount_of_choises) {
 
 
 
-function main() {
+async function main() {
     let amount_of_choises = 6;
-    let get_airport_data = get_airport_data();
+    let get_airport_data = await get_airport_data()
 
     while (round_counter <= 5) {
         /*
@@ -121,3 +120,6 @@ function main() {
         alert("You have won!");
     }
 }
+
+
+main();

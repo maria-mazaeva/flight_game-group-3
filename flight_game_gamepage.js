@@ -65,6 +65,6 @@ function createButtons(airportList){  //ADD IN ARGUMENT LIST OF AIRPORTS - it wi
     }
 }
 //calling the function:
-createButtons(listOfAirports);
+//createButtons(listOfAirports);
 
 // IF THERE IS ENOUGH TIME - to CREATE ALSO AFTER EACH CHOISE AN IVENT "THE FLIGHT IS GOING ON WITH PIC or  smth". add it to "event listener?"
