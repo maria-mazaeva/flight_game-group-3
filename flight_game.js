@@ -24,7 +24,20 @@ async function get_airport_data() {
 //Calculates the distance between to choose the nearest one for the police
 async function run_airport_distance(locations_to_choose, route_records) {
     try {
-        let request = await fetch("url");
+
+        //Have to add parameters to fetch, and use POST to send objects to the backend
+        let request = await fetch("http://127.0.0.1:5000/run_airport_distance/", {
+            method: "POST",    //the http request POST
+
+            //Content of what we are sending
+            //Have to change the objects to strings
+            //Json.stringify can change any JS datatype to a string
+            body: JSON.stringify({
+                route_records: route_records,
+                locations_to_choose: locations_to_choose
+            })
+
+        });
 
         if (request.status === 200) {
             let response = await request.json();
@@ -71,16 +84,14 @@ async function rounds(amount_of_choises) {
 
 
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
-
-
-    let next_location = createButtons(locations_to_choose);
+    console.log(police_location);
      
-
+    /*
     if (police_location === get_current_location(next_location)[0]) {
         return "loosing";
     } else {
         return "winning";
-    }
+    }*/
 
 
 }
@@ -91,13 +102,13 @@ async function rounds(amount_of_choises) {
 
 async function main() {
     let amount_of_choises = 6;
-    let airport_data = await get_airport_data()
+    let airport_data = await get_airport_data();
 
     while (round_counter <= 5) {
         /*
         Codeblock to change the heading
         Should state which airport we are currently at
-        Use info from variable get_airport_data
+        Use info from variable airport_data
          */
 
         let run = await rounds(amount_of_choises);
