@@ -72,11 +72,10 @@ async function rounds(amount_of_choises) {
 
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
 
-    /*
-    Code block for making the choises
-
-    Have to include the initialization of the next_location - variable
-     */
+    
+    createButtons(locations_to_choose);
+    //Have to include the initialization of the next_location - variable
+     
 
 
     if (police_location === get_current_location(next_location)[0]) {
@@ -121,3 +120,6 @@ async function main() {
         alert("You have won!");
     }
 }
+
+
+main();

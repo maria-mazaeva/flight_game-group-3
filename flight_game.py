@@ -1,5 +1,5 @@
 import json
-from flask import Flask
+from flask import Flask, Response
 from flask_cors import CORS
 import os
 import mysql.connector
@@ -16,7 +16,7 @@ class Database:
             host="127.0.0.1",
             port=3306,
             database="flight_game",
-            user="nika",
+            user="mariamaz",
             password="password",
             autocommit=True
         )
