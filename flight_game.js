@@ -69,12 +69,11 @@ async function rounds(amount_of_choises) {
         }
     }
 
-    console.log(locations_to_choose);
 
-    let police_location = run_airport_distance(locations_to_choose, route_records_player);
+    let police_location = await run_airport_distance(locations_to_choose, route_records_player);
 
 
-    //Have to include the initialization of the next_location - variable
+    let next_location = createButtons(locations_to_choose);
      
 
     if (police_location === get_current_location(next_location)[0]) {
@@ -92,7 +91,7 @@ async function rounds(amount_of_choises) {
 
 async function main() {
     let amount_of_choises = 6;
-    let get_airport_data = await get_airport_data()
+    let airport_data = await get_airport_data()
 
     while (round_counter <= 5) {
         /*
@@ -101,7 +100,7 @@ async function main() {
         Use info from variable get_airport_data
          */
 
-        let run = rounds(amount_of_choises);
+        let run = await rounds(amount_of_choises);
 
         if (run === "winning") {
             round_counter++;
@@ -119,3 +118,4 @@ async function main() {
         alert("You have won!");
     }
 }
+
