@@ -59,14 +59,19 @@ def get_current_location(icao_code):
 @app.route('/run_airport_distance/<locations_to_choose>/<route_records>')
 def run_airport_distance(locations_to_choose, route_records):
     # Get current location
-    curr_lat, curr_lon = get_current_location(route_records[-1])[0]
+    location_dictionary = get_current_location(route_records[-1])
+    curr_lat = location_dictionary['latitude_deg']
+    curr_lon = location_dictionary['longitude_deg']
     city_current = (curr_lat, curr_lon)
 
     nearest_city = None
     min_distance = float("inf")
 
-    for key in locations_to_choose.keys():
-        city_candidate = (key[3], key[4])
+
+    for value in locations_to_choose:
+        lat = value['latitude_deg']
+        lon = value['longitude_deg']
+        city_candidate = (lat, lon)
         distance_calculated = geodesic(city_current, city_candidate).km
 
         if distance_calculated < min_distance:
