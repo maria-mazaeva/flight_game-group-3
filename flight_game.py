@@ -1,5 +1,5 @@
 import json
-from flask import Flask,Response
+from flask import Flask,Response, jsonify
 from flask_cors import CORS
 import os
 import mysql.connector
@@ -56,8 +56,14 @@ def get_current_location(icao_code):
     return json.dumps(result)
 
 # Calculating the distance between airports to choose the nearest one for the police
-@app.route('/run_airport_distance/<locations_to_choose>/<route_records>')
-def run_airport_distance(locations_to_choose, route_records):
+# Added method ['POST'] to get dictionary and list of dictionaries from frontend, cause we could not do it through the url
+@app.route('/run_airport_distance', methods=['POST'])
+def run_airport_distance():
+    # getting info through a request
+    data = request.json
+    locations_to_choose = data['locations_to_choose']
+    route_records = data['route_records']
+
     # Get current location
     location_dictionary = get_current_location(route_records[-1])
     curr_lat = location_dictionary['latitude_deg']
