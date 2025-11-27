@@ -54,7 +54,7 @@ async function get_current_location(icao_code) {
 async function rounds(amount_of_choises) {
     //Fetch data from backend
     let data = await get_airport_data();
-    let locations_to_choose =  {};
+    let locations_to_choose =  [];
 
     //List to track used indexes
     let used_indexes = [];
@@ -62,21 +62,20 @@ async function rounds(amount_of_choises) {
     while (used_indexes.length < amount_of_choises) {
         let index = Math.floor(Math.random() * data.length);
 
-        if (!(index in used_indexes)) {  //Syntax for checking if element is inside a list
-            locations_to_choose[data[index]] = null;
+        if (used_indexes.includes(index) === false) {  //Syntax for checking if element is inside a list
+            let data_locations = data[index];
+            locations_to_choose.push(data_locations);
             used_indexes.push(index);
         }
     }
 
+    console.log(locations_to_choose);
+
+    let police_location = run_airport_distance(locations_to_choose, route_records_player);
 
 
-    let police_location = await run_airport_distance(locations_to_choose, route_records_player);
-
-    
-    createButtons(locations_to_choose);
     //Have to include the initialization of the next_location - variable
      
-
 
     if (police_location === get_current_location(next_location)[0]) {
         return "loosing";
@@ -120,6 +119,3 @@ async function main() {
         alert("You have won!");
     }
 }
-
-
-main();
