@@ -28,7 +28,9 @@ async function run_airport_distance(locations_to_choose, route_records) {
         //Have to add parameters to fetch, and use POST to send objects to the backend
         let request = await fetch("http://127.0.0.1:5000/run_airport_distance", {
             method: "POST",    //the http request POST
-
+            headers: {
+                "Content-Type": "application/json"  //Sets the media-type (format) so that the backend can interpret the data
+            },
             //Content of what we are sending
             //Have to change the objects to strings
             //Json.stringify can change any JS datatype to a string
@@ -82,8 +84,7 @@ async function rounds(amount_of_choises) {
         }
     }
 
-    console.log(locations_to_choose)
-    console.log(route_records_player)
+
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
     console.log(police_location);
      
