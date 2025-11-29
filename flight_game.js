@@ -88,12 +88,12 @@ async function rounds(amount_of_choises) {
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
     console.log(police_location);
      
-    /*
+
     if (police_location === get_current_location(next_location)[0]) {
         return "loosing";
     } else {
         return "winning";
-    }*/
+    }
 
 
 }
@@ -120,7 +120,37 @@ async function main() {
         }
 
         if (run === "losing") {
-            alert("You have lost!");
+            //Removing elements
+            document.querySelector(".roundText").remove();
+            document.querySelector(".mainBox").remove();
+
+            //Fetching the body element
+            let bodyEl = document.querySelector("body");
+
+            //Creates a div box for elements
+            let boxEl = document.createElement("div");
+            boxEl.classList.add("box");
+
+            //Creates a header inside div
+            let h1El = document.createElement("h1");
+            h1El.innerText = "YOU LOST";
+            boxEl.appendChild(h1El);
+
+
+
+            //Creates image element inside div
+            let imgEl = document.createElement("img");
+            imgEl.src = "cartoon-prisoner-behind-bars-10416629 (1).webp";
+            boxEl.appendChild(imgEl);
+
+            //Creates button to restart game inside div
+            let pEl = document.createElement("p");
+            pEl.innerText = "Play again";
+            boxEl.appendChild(pEl);
+            pEl.addEventListener("click", main);
+
+            //Appends the div to the body element
+            bodyEl.appendChild(boxEl);
             break;
         }
 
@@ -128,7 +158,38 @@ async function main() {
     }
 
     if (rounds_counter === 6) {
-        alert("You have won!");
+        //Removing elements
+            document.querySelector(".roundText").remove();
+            document.querySelector(".mainBox").remove();
+
+            //Fetching the body element
+            let bodyEl = document.querySelector("body");
+
+            //Creates a div box for elements
+            let boxEl = document.createElement("div");
+            boxEl.classList.add("box");
+
+            //Creates a header inside div
+            let h1El = document.createElement("h1");
+            h1El.innerText = "YOU WON";
+            boxEl.appendChild(h1El);
+
+
+
+            //Creates image element inside div
+            let imgEl = document.createElement("img");
+            imgEl.src = "cartoon-thief-running-sack-money-cheerful-cartoon-thief-depicted-running-large-sack-money-slung-over-his-393251250.webp";
+            boxEl.appendChild(imgEl);
+
+            //Creates button to restart game inside div
+            let pEl = document.createElement("p");
+            pEl.innerText = "Play again";
+            boxEl.appendChild(pEl);
+            pEl.addEventListener("click", main);
+
+            //Appends the div to the body element
+            bodyEl.appendChild(boxEl);
     }
+
 }
 
