@@ -58,11 +58,37 @@ async function get_current_location(icao_code) {
 
         if (request.status === 200) {
             let response = await request.json();
+
+            let latitude = response.latitude_deg;
+            let longitude = response.longitude_deg;
+
+            show_map(latitude,longitude)
+
             return response;
         }
+
     } catch(error) {
         console.log(error);
     }
+}
+
+function show_map(lat,lon) {
+    document.querySelector(".europeMap").remove();
+    const picture_box = document.querySelector('.pictureBox');
+    const map = L.map(picture_box).setView([lat, lon], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    const airportMarkers = L.featureGroup().addTo(map);
+    const marker = L.marker([lat,lon])
+        .bindPopup('You are here.')
+        .openPopup();
+
+
+    // pan map to selected airport
+    map.flyTo([lat,lon]);
+
 }
 
 
