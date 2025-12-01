@@ -43,28 +43,24 @@ let ul = document.createElement("ul");
 gameBox.appendChild(ul);
 
 /////////// I need to fetch data of airports here !!!!!!!!!!!!!!!!!!!!!
-let listOfAirports = ["Finland", "Italy", "Spain", "Norway", "Vatican", "Germany"] //example list
+//let listOfAirports = ["Finland", "Italy", "Spain", "Norway", "Vatican", "Germany"] //example list
 
 //creating function "createButtons(airportList)"" to make buttons based on airport list:
-function createButtons(airportList){  //ADD IN ARGUMENT LIST OF AIRPORTS - it will make buttons based on it.
+// function createButtons(airportList){  //ADD IN ARGUMENT LIST OF AIRPORTS - it will make buttons based on it.
 
-    for (let i = 1; i<=airportList.length; i++){
-        //creating buttons :
-        let li = document.createElement("li");
-        ul.appendChild(li);
-        let button = document.createElement("button");
-        button.className = "buttonStyle";
-        button.innerHTML = `Here is the choice ${i} - ${airportList[i-1]}.`;
-        li.appendChild(button);
+//     for (let i = 1; i<=airportList.length; i++){
+//         //creating buttons :
+//         let li = document.createElement("li");
+//         ul.appendChild(li);
+//         let button = document.createElement("button");
+//         button.className = "buttonStyle";
+//         button.innerHTML = `Here is the choice ${i} - ${airportList[i-1]}.`;
+//         li.appendChild(button);
     
-        //what happens if cliked: reurns the value to check if it is correct???
-        button.addEventListener("click", () =>{
-            console.log("You clicked:", airportList[i-1]);});
-            //1 - RETURNS ANSWER TO CHECK IF CORRECT OR NOT - IF WRONG  - ALERT  OF LOOSING, GAME OVER
-            //if correct - same round loop repeats the process of creating buttons based on airport list
-    }
-}
-//calling the function:
-//createButtons(listOfAirports);
-
-// IF THERE IS ENOUGH TIME - to CREATE ALSO AFTER EACH CHOISE AN IVENT "THE FLIGHT IS GOING ON WITH PIC or  smth". add it to "event listener?"
+//         //what happens if cliked: reurns the value to check if it is correct???
+//         button.addEventListener("click", () =>{
+//             console.log("You clicked:", airportList[i-1]);});
+//             //1 - RETURNS ANSWER TO CHECK IF CORRECT OR NOT - IF WRONG  - ALERT  OF LOOSING, GAME OVER
+//             //if correct - same round loop repeats the process of creating buttons based on airport list
+//     }
+// }

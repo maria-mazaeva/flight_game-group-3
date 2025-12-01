@@ -16,7 +16,7 @@ class Database:
             host="127.0.0.1",
             port=3306,
             database="flight_game",
-            user="root",
+            user="mariamaz",
             password="password",
             autocommit=True
         )
@@ -65,7 +65,7 @@ def run_airport_distance():
     route_records = data['route_records']
 
     # Get current location
-    location_dictionary = json.loads(get_current_location(route_records[-1]))
+    location_dictionary = json.loads(get_current_location(route_records[-2]))
     curr_lat = location_dictionary['latitude_deg']
     curr_lon = location_dictionary['longitude_deg']
     city_current = (curr_lat, curr_lon)
@@ -112,10 +112,10 @@ rounds_counter = 1
 
 # Function to start the game
 # Gives the player information about how the game works
-def start_game():
-    print('WELCOME to the "Police escape" game!')
-    print("You just robbed the Bank of Finland, and the police are after you!!!")
-    print("There are 5 rounds in the game.\nTo win: visit 5 airports, each turn pick the FARTHEST airport.\nPolice always move to the CLOSEST.\nIf they reach you, you lose.")
+# def start_game():
+#     print('WELCOME to the "Police escape" game!')
+#     print("You just robbed the Bank of Finland, and the police are after you!!!")
+#     print("There are 5 rounds in the game.\nTo win: visit 5 airports, each turn pick the FARTHEST airport.\nPolice always move to the CLOSEST.\nIf they reach you, you lose.")
 
 
 
@@ -170,28 +170,28 @@ def rounds(amount_of_choises):
     return answer
 
 
-# MAIN ACTION
-start_game()
-amount_of_choises = 6
-getairportdata = get_airport_data()
-while rounds_counter <= 5:
-    print(f"--------------------- ROUND {rounds_counter} ---------------------")
+# MAIN ACTION      I commented it (Maria)
+#start_game()
+# amount_of_choises = 6
+# getairportdata = get_airport_data()
+# while rounds_counter <= 5:
+#     print(f"--------------------- ROUND {rounds_counter} ---------------------")
 
-    current = ("f", "Finland")
-    for i in getairportdata:
-        if i[2] == route_records_player[-1]:  # prints and tracks current lication
-            current = i
-    print(f"Your current location is {current[1]}")
+#     current = ("f", "Finland")
+#     for i in getairportdata:
+#         if i[2] == route_records_player[-1]:  # prints and tracks current lication
+#             current = i
+#     print(f"Your current location is {current[1]}")
 
-    run = rounds(amount_of_choises)
-    if run == "winning":
-        rounds_counter += 1
-    if run == "losing":
-        print(f"You lost. Police just got you!\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
-        break
-    amount_of_choises -= 1
-if rounds_counter == 6:
-    print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
+#     run = rounds(amount_of_choises)
+#     if run == "winning":
+#         rounds_counter += 1
+#     if run == "losing":
+#         print(f"You lost. Police just got you!\n- | | (x_x) | |\n- | |  /█╯  | |\n- | |  / |  | |")
+#         break
+#     amount_of_choises -= 1
+# if rounds_counter == 6:
+#     print(f"You won!!! Congratulations!\n (-_•)  \n <) )╯💰\n  / > ")
 
 
 

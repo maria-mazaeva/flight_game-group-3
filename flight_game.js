@@ -1,10 +1,52 @@
 "use strict";
 
+// CREATING PAGE ELEMENTS::::
 
-let route_records_player = ["EFHK"];
+//creating " current round text"
+let roundText = document.createElement("h1")
+roundText.className = "";
+roundText.innerHTML = ""
+document.body.appendChild(roundText);
+
+//creating main structure - space with 2 poxes:
+// with choises (gameBox) and the right with map pic (pictureBox):
+let mainBox = document.createElement("div");
+mainBox.className = "mainBox";
+document.body.appendChild(mainBox);
+
+//making game box:
+let gameBox = document.createElement("div");
+gameBox.className = "gameBox";
+mainBox.appendChild(gameBox);
+
+//making picture box:
+let pictureBox = document.createElement("div");
+pictureBox.className = "pictureBox";
+mainBox.appendChild(pictureBox);
+
+// adding map:
+let europeMap = document.createElement("img");
+europeMap.className = "europeMap";
+europeMap.src = "EuropeMap.png";
+pictureBox.appendChild(europeMap);
+
+// gamebox - making a list inside and text "your current  location is":
+// Current position: 
+let currentLocationText = document.createElement("p")
+currentLocationText.className = "currentLocationText";
+currentLocationText.innerHTML = `Your current  location is: VARIABLE NAME.`;
+gameBox.appendChild(currentLocationText);
+
+//list of buttons
+let ul = document.createElement("ul");
+gameBox.appendChild(ul);
+
+///////// HERE COMES FUNCTIONS:::::
+
+
+let previous_location = ["Finland"]
+let route_records_player = ["EFHK", "EFHK"];  // dumm fix related to index and police lication for now
 let round_counter = 1;
-
-
 
 async function get_airport_data() {
     try {
@@ -50,8 +92,6 @@ async function run_airport_distance(locations_to_choose, route_records) {
     }
 }
 
-
-
 async function get_current_location(icao_code) {
     try {
         let request = await fetch("http://127.0.0.1:5000/get_current_location/" + icao_code);
@@ -91,9 +131,32 @@ function show_map(lat,lon) {
 
 }
 
+// Creating Buttons:
+function createButtons(airportList){
+    ul.innerHTML = "";
+    return new Promise(resolve => {
+    for (let i = 0; i<airportList.length; i++){
+        //creating buttons :
+        let li = document.createElement("li");
+        ul.appendChild(li);
+        let button = document.createElement("button");
+        button.className = "buttonStyle";
+        button.innerHTML = `${i+1}. ${airportList[i].name}.`;
+        li.appendChild(button);
+
+        //clicking button:
+        button.addEventListener("click", () => {
+            //let choice = [airportList[i].latitude_deg, airportList[i].longitude_deg];
+            let choice = airportList[i].ident
+            route_records_player.push(choice);
+            previous_location.push(airportList[i].name);
+            console.log(`Gamers -  ${airportList[i].latitude_deg}, ${airportList[i].longitude_deg}`)
+            resolve(choice);
+            });}})}
 
 async function rounds(amount_of_choises) {
     //Fetch data from backend
+    currentLocationText.innerHTML = `Your current location is ${previous_location.at(-1)}`
     let data = await get_airport_data();
     let locations_to_choose =  [];
 
@@ -109,23 +172,26 @@ async function rounds(amount_of_choises) {
             used_indexes.push(index);
         }
     }
+    
+    console.log(locations_to_choose);
+    let cteateButtonsVariable = await createButtons(locations_to_choose);
 
-
+    //starting process of finding police and players location:
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
-    console.log(police_location);
-     
+    let current_location = await get_current_location(route_records_player.at(-1));
 
-    if (police_location === get_current_location(next_location)[0]) {
-        return "loosing";
+    console.log(`police - ${police_location}`);
+    console.log(`all clicked rounds -  ${route_records_player}`);
+    console.log(`current location - ${route_records_player.at(-1)}`);
+    //comparing of police and theif in the same place:
+
+    if (police_location == current_location) {
+        console.log("lost")
+        return "losing";
     } else {
+        console.log("win")
         return "winning";
-    }
-
-
-}
-
-
-
+    }}
 
 
 async function main() {
@@ -133,19 +199,16 @@ async function main() {
     let airport_data = await get_airport_data();
 
     while (round_counter <= 5) {
-        /*
-        Codeblock to change the heading
-        Should state which airport we are currently at
-        Use info from variable airport_data
-         */
+        roundText.innerHTML = `Round ${round_counter}`;      
 
         let run = await rounds(amount_of_choises);
 
-        if (run === "winning") {
+        if (run == "winning") {
             round_counter++;
+            amount_of_choises--;
         }
 
-        if (run === "losing") {
+        if (run == "losing") {
             //Removing elements
             document.querySelector(".roundText").remove();
             document.querySelector(".mainBox").remove();
@@ -162,8 +225,6 @@ async function main() {
             h1El.innerText = "YOU LOST";
             boxEl.appendChild(h1El);
 
-
-
             //Creates image element inside div
             let imgEl = document.createElement("img");
             imgEl.src = "cartoon-prisoner-behind-bars-10416629 (1).webp";
@@ -179,11 +240,9 @@ async function main() {
             bodyEl.appendChild(boxEl);
             break;
         }
-
-        amount_of_choises--;
     }
 
-    if (rounds_counter === 6) {
+    if (round_counter === 6) {
         //Removing elements
             document.querySelector(".roundText").remove();
             document.querySelector(".mainBox").remove();
@@ -199,8 +258,6 @@ async function main() {
             let h1El = document.createElement("h1");
             h1El.innerText = "YOU WON";
             boxEl.appendChild(h1El);
-
-
 
             //Creates image element inside div
             let imgEl = document.createElement("img");
@@ -219,3 +276,4 @@ async function main() {
 
 }
 
+main()
