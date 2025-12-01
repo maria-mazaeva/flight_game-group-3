@@ -1,10 +1,10 @@
 "use strict";
 
-// CREATING PAGE ELEMENTS::::
+    // CREATING PAGE ELEMENTS::::
 
 //creating " current round text"
 let roundText = document.createElement("h1")
-roundText.className = "";
+roundText.className = "roundText";
 roundText.innerHTML = ""
 document.body.appendChild(roundText);
 
@@ -31,15 +31,16 @@ europeMap.src = "EuropeMap.png";
 pictureBox.appendChild(europeMap);
 
 // gamebox - making a list inside and text "your current  location is":
-// Current position: 
+// Current position:
 let currentLocationText = document.createElement("p")
 currentLocationText.className = "currentLocationText";
-currentLocationText.innerHTML = `Your current  location is: VARIABLE NAME.`;
+currentLocationText.innerHTML = ``;
 gameBox.appendChild(currentLocationText);
 
 //list of buttons
 let ul = document.createElement("ul");
 gameBox.appendChild(ul);
+
 
 ///////// HERE COMES FUNCTIONS:::::
 
@@ -102,7 +103,7 @@ async function get_current_location(icao_code) {
             let latitude = response.latitude_deg;
             let longitude = response.longitude_deg;
 
-            show_map(latitude,longitude)
+            //show_map(latitude,longitude)
 
             return response;
         }
@@ -125,6 +126,7 @@ function show_map(lat,lon) {
         .bindPopup('You are here.')
         .openPopup();
 
+    console.log(locations_to_choose);
 
     // pan map to selected airport
     map.flyTo([lat,lon]);
@@ -148,15 +150,16 @@ function createButtons(airportList){
         button.addEventListener("click", () => {
             //let choice = [airportList[i].latitude_deg, airportList[i].longitude_deg];
             let choice = airportList[i].ident
+            console.log(choice);
             route_records_player.push(choice);
             previous_location.push(airportList[i].name);
+            console.log(previous_location);
             console.log(`Gamers -  ${airportList[i].latitude_deg}, ${airportList[i].longitude_deg}`)
             resolve(choice);
             });}})}
 
 async function rounds(amount_of_choises) {
     //Fetch data from backend
-    currentLocationText.innerHTML = `Your current location is ${previous_location.at(-1)}`
     let data = await get_airport_data();
     let locations_to_choose =  [];
 
@@ -176,8 +179,11 @@ async function rounds(amount_of_choises) {
     console.log(locations_to_choose);
     let cteateButtonsVariable = await createButtons(locations_to_choose);
 
+
     //starting process of finding police and players location:
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
+
+
     let current_location = await get_current_location(route_records_player.at(-1));
 
     console.log(`police - ${police_location}`);
@@ -185,7 +191,7 @@ async function rounds(amount_of_choises) {
     console.log(`current location - ${route_records_player.at(-1)}`);
     //comparing of police and theif in the same place:
 
-    if (police_location == current_location) {
+    if ((police_location[0] === current_location.latitude_deg) && (police_location[1] === current_location.longitude_deg) ) {
         console.log("lost")
         return "losing";
     } else {
@@ -195,21 +201,26 @@ async function rounds(amount_of_choises) {
 
 
 async function main() {
+
+
+
+
+    round_counter = 1;
     let amount_of_choises = 6;
-    let airport_data = await get_airport_data();
 
     while (round_counter <= 5) {
-        roundText.innerHTML = `Round ${round_counter}`;      
+        roundText.innerHTML = `Round ${round_counter}`;
+        currentLocationText.innerHTML = `Your current location is ${previous_location.at(-1)}`;
 
         let run = await rounds(amount_of_choises);
 
-        if (run == "winning") {
+        if (run === "winning") {
             round_counter++;
             amount_of_choises--;
         }
 
         
-        if (run == "losing") {
+        if (run === "losing") {
             //Removing elements
             document.querySelector(".roundText").remove();
             document.querySelector(".mainBox").remove();
@@ -235,7 +246,7 @@ async function main() {
             let pEl = document.createElement("p");
             pEl.innerText = "Play again";
             boxEl.appendChild(pEl);
-            pEl.addEventListener("click", main);
+            pEl.addEventListener("click", refresh);
 
             //Appends the div to the body element
             bodyEl.appendChild(boxEl);
@@ -269,12 +280,18 @@ async function main() {
             let pEl = document.createElement("p");
             pEl.innerText = "Play again";
             boxEl.appendChild(pEl);
-            pEl.addEventListener("click", main);
+            pEl.addEventListener("click", refresh);
 
             //Appends the div to the body element
             bodyEl.appendChild(boxEl);
     }
 
 }
+
+
+function refresh() {
+    location.reload();
+}
+
 
 main()
