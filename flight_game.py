@@ -102,7 +102,6 @@ if __name__ == '__main__':
 
 
 
-
 # Empty lists to store the routes of the player and the police
 # Could be printed as a part of the summary at the end (wether you win or lose)
 route_records_player = ["EFHK"]  # Player always starts at Helinki Airport, Finland

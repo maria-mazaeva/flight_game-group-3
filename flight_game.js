@@ -208,6 +208,7 @@ async function main() {
             amount_of_choises--;
         }
 
+        
         if (run == "losing") {
             //Removing elements
             document.querySelector(".roundText").remove();
