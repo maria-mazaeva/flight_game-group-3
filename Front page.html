@@ -25,33 +25,42 @@
         .info-box {
             background: #eeeeee;
             border-radius: 12px;
-            padding: 20px;
-            max-width: 600px;
+            padding: 22px;
+            max-width: 650px;
             margin: 0 auto;
             box-shadow: 0 4px 10px rgba(0, 0, 0.6, 0.6);
-            line-height: 1.6;
+            line-height: 1.5;
+            font-size: 18px;
         }
 
         .start-button {
             font-size: 24px;
-            color: silver;
-            background-color: darkblue;
+            color: darkblue;
+            background-color: navajowhite;
             padding: 15px 30px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 35px;
+            margin-top: 60px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1 id="main-heading">Are you ready to outsmart the police on a flight adventure across Europe?</h1>
+        <h1 id="main-heading">Police Escape - the game</h1>
         <div class="info-box">
-            Your objective in <b>Police Escape</b> is to use your geographical knowledge in order to make a successful escape journey through Europe. In the role of a thief, you will start your journey in Helsinki, Finland and make five flights with the number of escape options declining for each round. Be sure to make the right choice, since the police are always waiting for you at the nearest airport. You have completed the game successfully if you are able to make the whole journey without getting caught.
-        </div>
-        <button class="start-button" onclick="startGame()">✈️ Start the game! ✈️</button>
+        <ul style="text-align: left; list-style-type: disc; padding-left: 25px; font-size: inherit;">
+        <li>Your objective is to use your geographical knowledge to make a successful escape journey through Europe.</li>
+        <li>You play as a thief starting your journey in Helsinki, Finland.</li>
+        <li>You will make five flights, with the number of escape options declining each round.</li>
+        <li>Choose your destinations wisely — the police are always waiting for you at the nearest airport.</li>
+        <li>You win the game if you complete the entire journey without getting caught.</li>
+    </ul>
+</div>
+        <a href="flight_game_gamepage.html">
+        <button class="start-button">✈️ <b>Start the game!</b> ✈️</button>
+        </a>
     </div>
 
     <script>
