@@ -25,10 +25,10 @@ pictureBox.className = "pictureBox";
 mainBox.appendChild(pictureBox);
 
 // adding map:
-let europeMap = document.createElement("img");
-europeMap.className = "europeMap";
-europeMap.src = "EuropeMap.png";
-pictureBox.appendChild(europeMap);
+// let europeMap = document.createElement("img");
+// europeMap.className = "europeMap";
+// europeMap.src = "EuropeMap.png";
+// pictureBox.appendChild(europeMap);
 
 // gamebox - making a list inside and text "your current  location is":
 // Current position:
@@ -99,12 +99,6 @@ async function get_current_location(icao_code) {
 
         if (request.status === 200) {
             let response = await request.json();
-
-            let latitude = response.latitude_deg;
-            let longitude = response.longitude_deg;
-
-            //show_map(latitude,longitude)
-
             return response;
         }
 
@@ -113,23 +107,14 @@ async function get_current_location(icao_code) {
     }
 }
 
-function show_map(lat,lon) {
-    document.querySelector(".europeMap").remove();
-    const picture_box = document.querySelector('.pictureBox');
-    const map = L.map(picture_box).setView([lat, lon], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+function move_map_to_location(map, lat,lon) {
 
-    const airportMarkers = L.featureGroup().addTo(map);
-    const marker = L.marker([lat,lon])
+
+    map.flyTo([lat,lon]);
+
+    L.marker([lat,lon]).addTo(map)
         .bindPopup('You are here.')
         .openPopup();
-
-    console.log(locations_to_choose);
-
-    // pan map to selected airport
-    map.flyTo([lat,lon]);
 
 }
 
@@ -158,7 +143,7 @@ function createButtons(airportList){
             resolve(choice);
             });}})}
 
-async function rounds(amount_of_choises) {
+async function rounds(map, amount_of_choises) {
     //Fetch data from backend
     let data = await get_airport_data();
     let locations_to_choose =  [];
@@ -183,8 +168,12 @@ async function rounds(amount_of_choises) {
     //starting process of finding police and players location:
     let police_location = await run_airport_distance(locations_to_choose, route_records_player);
 
-
     let current_location = await get_current_location(route_records_player.at(-1));
+    let curr_lat = current_location.latitude_deg;
+    let curr_lon = current_location.longitude_deg;
+
+    move_map_to_location(map, curr_lat,curr_lon);
+
 
     console.log(`police - ${police_location}`);
     console.log(`all clicked rounds -  ${route_records_player}`);
@@ -202,8 +191,16 @@ async function rounds(amount_of_choises) {
 
 async function main() {
 
-
-
+    //adding map with predefined location - Helsinki
+    const picture_box = document.querySelector('.pictureBox');
+    const map = L.map(picture_box).setView([60.1699, 24.9384], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+    let popup = L.popup()
+    .setLatLng([60.1699, 24.9384])
+    .setContent("You start the game in Helsinki.")
+    .openOn(map);
 
     round_counter = 1;
     let amount_of_choises = 6;
@@ -212,7 +209,7 @@ async function main() {
         roundText.innerHTML = `Round ${round_counter}`;
         currentLocationText.innerHTML = `Your current location is ${previous_location.at(-1)}`;
 
-        let run = await rounds(amount_of_choises);
+        let run = await rounds(map, amount_of_choises);
 
         if (run === "winning") {
             round_counter++;
