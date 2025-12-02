@@ -1,4 +1,6 @@
-/* GENERAL PAGE STYLING */
+/* flight_game.css */
+
+/* General body styling */
 body {
     background-image: url('background.jpg');
     background-size: cover;
@@ -7,40 +9,80 @@ body {
     font-family: Tahoma, sans-serif;
     margin: 0;
     padding: 0;
+    color: #000;
 }
 
-/* MAIN CONTAINER */
+/* Container to center content */
 .container {
     text-align: center;
     margin-top: 40px;
 }
 
-/* INFO BOX */
-.info-box {
-    background: #eeeeee;
-    border-radius: 12px;
-    padding: 22px;
-    max-width: 650px;
-    margin: 0 auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0.6, 0.6);
-    line-height: 1.5;
-    font-size: 18px;
+/* Main heading */
+#main-heading {
+    font-size: 48px;
+    color: navy;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
 }
 
-/* START BUTTON */
+/* Info box styling */
+.info-box {
+    background: rgba(238, 238, 238, 0.95); /* slightly transparent */
+    border-radius: 12px;
+    padding: 28px;
+    max-width: 660px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    line-height: 1.5;
+    font-size: 20px;
+    text-align: left;
+}
+
+/* List inside info box */
+.info-box ul {
+    list-style-type: disc;
+    padding-left: 25px;
+    font-size: inherit;
+}
+
+/* Start button styling */
 .start-button {
     font-size: 24px;
-    color: darkblue;
-    background-color: navajowhite;
+    color: navy;
+    background-color: silver;
     padding: 15px 30px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     margin-top: 60px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
+/* Button hover effect */
 .start-button:hover {
+    background-color: #ddd;
     transform: scale(1.05);
-    background-color: #f2c996;
 }
+
+/* Button active effect */
+.start-button:active {
+    transform: scale(0.95);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    #main-heading {
+        font-size: 36px;
+    }
+
+    .info-box {
+        padding: 20px;
+        font-size: 18px;
+    }
+
+    .start-button {
+        font-size: 20px;
+        padding: 12px 25px;
+    }
+}
+
