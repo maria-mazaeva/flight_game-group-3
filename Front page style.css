@@ -1,4 +1,4 @@
-/* General body styling */
+/* GENERAL PAGE STYLING */
 body {
     background-image: url('background.jpg');
     background-size: cover;
@@ -7,48 +7,40 @@ body {
     font-family: Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    color: #333;
 }
 
-/* Container for centering content */
+/* MAIN CONTAINER */
 .container {
     text-align: center;
     margin-top: 40px;
-    padding: 0 20px;
 }
 
-/* Info box styling */
+/* INFO BOX */
 .info-box {
     background: #eeeeee;
     border-radius: 12px;
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto 35px auto;
+    padding: 22px;
+    max-width: 650px;
+    margin: 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0.6, 0.6);
-    line-height: 1.6;
+    line-height: 1.5;
+    font-size: 18px;
 }
 
-/* Main heading styling */
-#main-heading {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #222;
-}
-
-/* Start button styling */
+/* START BUTTON */
 .start-button {
     font-size: 24px;
-    color: silver;
-    background-color: darkblue;
+    color: darkblue;
+    background-color: navajowhite;
     padding: 15px 30px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+    margin-top: 60px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-/* Hover effect for the button */
 .start-button:hover {
-    background-color: navy;
     transform: scale(1.05);
+    background-color: #f2c996;
 }
