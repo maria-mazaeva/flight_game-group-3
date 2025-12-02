@@ -24,15 +24,10 @@ let pictureBox = document.createElement("div");
 pictureBox.className = "pictureBox";
 mainBox.appendChild(pictureBox);
 
-// adding map:
-// let europeMap = document.createElement("img");
-// europeMap.className = "europeMap";
-// europeMap.src = "EuropeMap.png";
-// pictureBox.appendChild(europeMap);
 
 // gamebox - making a list inside and text "your current  location is":
 // Current position:
-let currentLocationText = document.createElement("p")
+let currentLocationText = document.createElement("h2")
 currentLocationText.className = "currentLocationText";
 currentLocationText.innerHTML = ``;
 gameBox.appendChild(currentLocationText);
@@ -128,7 +123,7 @@ function createButtons(airportList){
         ul.appendChild(li);
         let button = document.createElement("button");
         button.className = "buttonStyle";
-        button.innerHTML = `${i+1}. ${airportList[i].name}.`;
+        button.innerHTML = `<strong>${i+1}. ${airportList[i].name}</strong>.`;
         li.appendChild(button);
 
         //clicking button:
@@ -207,7 +202,7 @@ async function main() {
 
     while (round_counter <= 5) {
         roundText.innerHTML = `Round ${round_counter}`;
-        currentLocationText.innerHTML = `Your current location is ${previous_location.at(-1)}`;
+        currentLocationText.innerHTML = `You are now in <strong>${previous_location.at(-1)}</strong>.<br>Please choose your next location:`;
 
         let run = await rounds(map, amount_of_choises);
 
