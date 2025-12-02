@@ -123,7 +123,7 @@ function createButtons(airportList){
         ul.appendChild(li);
         let button = document.createElement("button");
         button.className = "buttonStyle";
-        button.innerHTML = `<strong>${i+1}. ${airportList[i].name}</strong>.`;
+        button.innerHTML = `<strong>${i+1}. ${airportList[i].name}</strong>`;
         li.appendChild(button);
 
         //clicking button:
