@@ -4,8 +4,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: Tahoma, sans-serif;
-    margin: 0;
-    padding: 0;
+
 }
 
 .container {
@@ -16,21 +15,16 @@ body {
 .info-box {
     background: #eeeeee;
     border-radius: 12px;
-    padding: 35px;
-    max-width: 60%;
+    padding: 28px;
+    max-width: 660px;
     margin: 0 auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 10px rgba(0, 0, 0.6, 0.6);
     line-height: 1.5;
-    font-size: 28px;
-}
-
-#main-heading {
-    font-size: 45px;
-    color: navy;
+    font-size: 20px;
 }
 
 .start-button {
-    font-size: 40px;
+    font-size: 24px;
     color: navy;
     background-color: silver;
     padding: 15px 30px;
@@ -38,10 +32,5 @@ body {
     border-radius: 8px;
     cursor: pointer;
     margin-top: 60px;
-    transition: 0.2s;
-}
-
-.start-button:hover {
-    background-color: #dddddd;
 }
 

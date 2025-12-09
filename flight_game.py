@@ -1,7 +1,6 @@
 import json
-from flask import Flask,Response, jsonify, request
+from flask import Flask,Response,  request
 from flask_cors import CORS
-import os
 import mysql.connector
 import random
 from geopy.distance import geodesic
